@@ -1,0 +1,16 @@
+##== Configuração de REDE
+Wi-Fi: Birita
+Senha: mussumvive
+
+Host do roteador: 192.168.168.1
+Configurado como Wireless router (Operation Mode)
+
+usuário admin: zeca
+senha admin: cluster06
+
+
+##== Configuração das imagens
+
+Para passar par os memory cards
+sudo diskutil umount /dev/disk3s1 && sudo diskutil umount /dev/disk3
+sudo dd if=2018-03-13-raspbian-stretch-lite.img of=/dev/disk3
