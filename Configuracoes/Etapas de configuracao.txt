@@ -1,17 +1,52 @@
-sudo docker swarm init --advertise-addr 192.168.168.21
+########################
+### Montagem
+
+##== Configuração de REDE
+Wi-Fi: Birita
+Senha: mussumvive
+
+Host do roteador: 192.168.0.1
+Configurado como Wireless router (Operation Mode)
+
+usuário admin: zeca
+senha admin: cluster
 
 
+##== Configuração das imagens
 
-sudo docker swarm join --token SWMTKN-1-0zq5smwvgcvultblczyvuhocevgr8m8iormb5pw4z83yqpobsx-5gv59plnif2bn6hgbdzz69xpj 192.168.168.221:2377
+Para passar par os memory cards
+sudo diskutil umount /dev/disk3s1 && sudo diskutil umount /dev/disk3
+sudo dd if=2018-03-13-raspbian-stretch-lite.img of=/dev/disk3
 
-sudo docker swarm join --token SWMTKN-1-0zq5smwvgcvultblczyvuhocevgr8m8iormb5pw4z83yqpobsx-8x17rxj3dht4g1jca8ayf4x30 192.168.168.221:2377
 
-sudo docker service create --name viz --publish 8080:8080/tcp --detach=true --constraint node.role==manager --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock alexellis2/visualizer-arm:latest
+##== Comandos docker
 
-sudo docker service create --replicas 1 --detach=true --name helloworld alpine ping google.com
+curl -sSL http://get.docker.com | sh
 
-sudo docker service scale helloworld=10
+########################
+### Acesso
 
-sudo docker service create --name mynodered -p1880:1880 --replicas 1 --detach=true elzekool/rpi-nodered
+ssh-keygen -t rsa
 
-sudo docker service scale mynodered=10
+ssh-copy-id <user>@<machine>
+
+########################
+### Comandos Docker
+
+docker swarm init --advertise-addr 192.168.0.20
+
+docker swarm join -token manager
+
+docker swarm join --token SWMTKN-1-0zq5smwvgcvultblczyvuhocevgr8m8iormb5pw4z83yqpobsx-5gv59plnif2bn6hgbdzz69xpj 192.168.168.221:2377
+
+docker swarm join --token SWMTKN-1-0zq5smwvgcvultblczyvuhocevgr8m8iormb5pw4z83yqpobsx-8x17rxj3dht4g1jca8ayf4x30 192.168.168.221:2377
+
+docker service create --name viz --publish 8080:8080/tcp --detach=true --constraint node.role==manager --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock alexellis2/visualizer-arm:latest
+
+docker service create --replicas 1 --detach=true --name helloworld alpine ping google.com
+
+docker service scale helloworld=10
+
+docker service create --name mynodered -p1880:1880 --replicas 1 --detach=true elzekool/rpi-nodered
+
+docker service scale mynodered=10
