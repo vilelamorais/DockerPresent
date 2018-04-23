@@ -1,3 +1,21 @@
+script "conveniente" para instalação do docker
+curl -sSL https://get.docker.com | sh
+
+para resolver o problema de acesso a internet nos container:
+incluir no arquivo de configuração do docker a definição do DNS
+/etc/default/docker
+incluir a linha abaixo
+DOCKER_OPTS=" --dns 208.67.222.222 --dns 208.67.220.220"
+endereços ip dos DNSs OpenDNS
+
+para salvar uma imagem ajustada
+docker commit <container ID> <nomeda image:verão da imagem>
+ex: docker commit vileludo/nginx-ubuntu:1.4
+
+docker ps --filter "status=exited"
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ########################
 ### Montagem
 
@@ -35,7 +53,7 @@ ssh-copy-id <user>@<machine>
 
 docker swarm init --advertise-addr 192.168.0.20
 
-docker swarm join -token manager
+docker swarm join-token manager
 
 docker swarm join --token SWMTKN-1-0zq5smwvgcvultblczyvuhocevgr8m8iormb5pw4z83yqpobsx-5gv59plnif2bn6hgbdzz69xpj 192.168.168.221:2377
 
