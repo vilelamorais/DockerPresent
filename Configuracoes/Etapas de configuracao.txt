@@ -9,11 +9,17 @@ DOCKER_OPTS=" --dns 208.67.222.222 --dns 208.67.220.220"
 endereços ip dos DNSs OpenDNS
 
 para salvar uma imagem ajustada
-docker commit <container ID> <nomeda image:verão da imagem>
+docker commit <container ID> <nomeda image:vesão da imagem>
 ex: docker commit vileludo/nginx-ubuntu:1.4
 
 docker ps --filter "status=exited"
 
+
+#### Dokerfile
+Somente um arquivo por diretório
+
+docker build . (representando o diretório do dockerfile)
+docker build -t vileludo/apache:1.0 .
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ########################
