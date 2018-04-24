@@ -21,6 +21,11 @@ Somente um arquivo por diretório
 docker build . (representando o diretório do dockerfile)
 docker build -t vileludo/apache:1.0 .
 
+### configurações para definição de consumo de hardware
+
+
+
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ########################
 ### Montagem
