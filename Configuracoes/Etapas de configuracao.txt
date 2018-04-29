@@ -24,8 +24,6 @@ docker build -t vileludo/apache:1.0 .
 ### configurações para definição de consumo de hardware
 
 
-
-
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ########################
 ### Montagem
@@ -79,3 +77,32 @@ docker service scale helloworld=10
 docker service create --name mynodered -p1880:1880 --replicas 1 --detach=true elzekool/rpi-nodered
 
 docker service scale mynodered=10
+
+
+
+###############################################################################
+#########==========##########==========##########==========##########=========#
+
+
+
+Durante a apresentação sobre o que é o container falar sobre o custo de recursos com o overhead do sistema operacional virtualizado contra a virtualização somente dos recursos utilizados pela aplicação, compartilhando os recursos da máquina hospedeira
+
+O proposito do VMware/hyperv/xen ou qualquer outro hypervisor é o de virtualizar TODO o sistema operacional (máquina, componentes físicos, etc) e o docker é para virtualizar somente os componentes necessários para a aplicação
+
+docker ps -a ==> comando para listar todos os processos mesmo os já finalizados
+
+docker pause|unpause <container>
+
+docker stats <container>
+
+docker top <container>
+
+docker logs <container>
+
+docker rm (-f) <container>
+
+ ----- limitação de consumo de recursos -----
+
+docker run -ti --name <nome> -m <quantidade de memoria>(m|k|g) --cpu-shares
+
+docker run -ti -v <volume>
