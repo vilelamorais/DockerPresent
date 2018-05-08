@@ -142,7 +142,7 @@ resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 
-Algumas fontes utilizadas:
+Algumas fontes e referências utilizadas:
 - Configuração de redes virtuais
 https://precisionsec.com/virtualbox-host-only-network-cuckoo-sandbox-0-4-2/
 https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox
