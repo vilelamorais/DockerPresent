@@ -106,3 +106,12 @@ docker rm (-f) <container>
 docker run -ti --name <nome> -m <quantidade de memoria>(m|k|g) --cpu-shares
 
 docker run -ti -v <volume>
+docker run -ti -v <path no host>:<volume>
+
+docker inspect -f {{.Mounts}} <container>
+
+docker run -d -p 5433:5432 --name pgsql2 --volumes-from dbdados -e POSTGRESQL_USER=docker -e POSTGRE_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
+
+LEMBRETE
+
+Dockerfile - sempre com D maiúsculo
