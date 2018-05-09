@@ -154,5 +154,7 @@ https://medium.com/@TarunChinmai/sharing-internet-connection-from-a-linux-machin
 http://www.linuxandubuntu.com/home/how-to-configure-iptables-firewall-in-linux
 https://www.systutorials.com/1372/setting-up-gateway-using-iptables-and-route-on-linux/
 https://www.karlrupp.net/en/computer/nat_tutorial
+https://www.howtoforge.com/internet-connection-sharing-masquerading-on-linux
+https://www.howtoforge.com/nat_iptables
 
 - Docker
