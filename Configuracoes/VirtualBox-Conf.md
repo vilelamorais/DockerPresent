@@ -3,8 +3,6 @@ Construção do ambiente virtual (utilizando VirtualBox)
 Desenho de rede
 
 
-
-
 |-----------|     |---------------------------------------------------------|
 |           |     |                                                         |
 |  Acesso   |     |    Equipamento Host (Virtualizador)                     |
@@ -158,3 +156,8 @@ https://www.howtoforge.com/internet-connection-sharing-masquerading-on-linux
 https://www.howtoforge.com/nat_iptables
 
 - Docker
+errá quer é preciso fazer algummttiippooddeeaalltteerraaccaaooiimmpprrttaannttee??
+
+ffoorraaqquueeeesssseetteeccllaaddooeessttaammuuuuuuuuuuiittooeessqquuiissiittoo
+eee
+não esta funcionando direito
