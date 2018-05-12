@@ -156,8 +156,3 @@ https://www.howtoforge.com/internet-connection-sharing-masquerading-on-linux
 https://www.howtoforge.com/nat_iptables
 
 - Docker
-errá quer é preciso fazer algummttiippooddeeaalltteerraaccaaooiimmpprrttaannttee??
-
-ffoorraaqquueeeesssseetteeccllaaddooeessttaammuuuuuuuuuuiittooeessqquuiissiittoo
-eee
-não esta funcionando direito
