@@ -3,8 +3,6 @@ Construção do ambiente virtual (utilizando VirtualBox)
 Desenho de rede
 
 
-
-
 |-----------|     |---------------------------------------------------------|
 |           |     |                                                         |
 |  Acesso   |     |    Equipamento Host (Virtualizador)                     |
