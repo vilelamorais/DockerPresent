@@ -57,6 +57,7 @@ Para a criação da rede interna utiliza os seguintes comandos:
 
 VBoxManage hostonlyif create
    >> como resultado do comando foi criada a rede vboxnet1
+
 VBoxManage hostonlyif ipconfig vboxnet1 --ip ﻿192.168.57.3 --netmask 255.255.255.0
    >> como resultado do comando a range de ip foi alterado para o range especificado
 
@@ -64,7 +65,7 @@ O comando pode variar entre maiúscula e minúscula dependendo do sistema operac
 
 - Debian NAT
 
-Para criar a máquina virtual que será a centralizadora de requisições para a internet foi utilizada a distribuição Debian versão 9.4.0-amd64.
+Para criar a máquina virtual que será a centralizadora de requisições para a internet (default gateway) foi utilizada a distribuição Debian versão 9.4.0-amd64.
 A maquina virtual precisa ter 3 interfaces de rede sendo:
    * Adapter 1
      Marcado como ativo
@@ -84,9 +85,9 @@ A maquina virtual precisa ter 3 interfaces de rede sendo:
 
 Não existem requisitos definidos para a configuração da máquina de forma geral, somente para configuração de NETWORK e NAT.
 
-Para a definição das placas de rede foi editado o arquivo /etc/network/interfaces e incluida as seguintes definições
+Para a definição das placas de rede foi editado o arquivo /etc/network/interfaces (no uso de SO Debian) e incluida as seguintes definições:
 
-#######===================================================================================
+#######=========================================================================
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -115,7 +116,60 @@ iface enp0s9 inet static
       address 192.168.2.7
       netmask 255.255.255.0
 
-#######===================================================================================
+#######=========================================================================
+
+Para o SO CentOS, considere as configurações a seguir:
+
+Editar os arquivos de cada interface contído no diretório /etc/sysconfig/network-scripts/
+
+## ifcfg-enp0s3 ================================================================
+
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="dhcp"
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="no"
+NAME="enp0s3"
+UUID="aecc1275-c529-42bf-b35b-78f8da8ec578"
+DEVICE="enp0s3"
+ONBOOT="yes"
+
+## ifcfg-enp0s8 ================================================================
+
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=no
+NAME=enp0s8
+UUID=27a67e49-5740-4368-b509-9de96d45945f
+DEVICE=enp0s8
+ONBOOT=yes
+IPADDR=192.168.57.11
+PREFIX=24
+GATEWAY=192.168.57.3
+
+## ifcfg-enp0s9 ================================================================
+
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=no
+NAME=enp0s9
+UUID=8d25a481-382b-4fae-b7bf-989609b3189f
+DEVICE=enp0s9
+ONBOOT=yes
+IPADDR=192.168.2.8
+PREFIX=24
+
+#######=========================================================================
 
 Para realizar o compartilhamento e definição desta maquina virtual, foi utilizado o IPTABLES para as definições de NAT e mascaramento da REDE
 
@@ -136,9 +190,7 @@ iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 iptables -I FORWARD -o enp0s3 -s 192.168.0.0/16 -j ACCEPT
 iptables -I INPUT -s 192.168.0.0/16 -j ACCEPT
 
-
-
-resolv.conf
+Adiciona as entradas de DNS no arquivo resolv.conf conforme abaixo
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 
@@ -156,5 +208,8 @@ https://www.systutorials.com/1372/setting-up-gateway-using-iptables-and-route-on
 https://www.karlrupp.net/en/computer/nat_tutorial
 https://www.howtoforge.com/internet-connection-sharing-masquerading-on-linux
 https://www.howtoforge.com/nat_iptables
+
+- Configuração de interface de rede para CetnOS
+https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-networkscripts-interfaces.html
 
 - Docker
