@@ -48,7 +48,7 @@ Não existem restrições ou características especiais para o equipamento utili
 
 - VirtualBox
 
-Utilizada a versão 5.2.10 com Oracle VM VirtualBox Extension Pack 5.2.10
+Utilizada a versão 5.2.12 com Oracle VM VirtualBox Extension Pack 5.2.12
 
 Para a composição da rede virtualizada utilizada uma rede interna ao VirtualBox utilizando o range ﻿192.168.57.0/24.
 Para a criação da rede interna utiliza os seguintes comandos:
@@ -88,7 +88,7 @@ Não existem requisitos definidos para a configuração das máquinas de forma g
 
 Para a definição das placas de rede foi editado o arquivo /etc/network/interfaces (no uso de SO Debian) e incluida as seguintes definições:
 
-#######=========================================================================
+```
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -98,6 +98,7 @@ source /etc/network/interfaces.d/*
 auto lo
 iface lo inet loopback
 
+# The primary network interface
 # Configuração para obter IP do roteador/acesso de internet
 auto enp0s3
 allow-hotplug enp0s3
@@ -114,10 +115,10 @@ iface enp0s8 inet static
 auto enp0s9
 allow-hotplug enp0s9
 iface enp0s9 inet static
-      address 192.168.2.7
+      address 192.168.2.100
       netmask 255.255.255.0
 
-#######=========================================================================
+```
 
 Para a distribuição CentOS, considere as configurações a seguir:
 
