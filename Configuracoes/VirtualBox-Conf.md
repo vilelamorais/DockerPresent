@@ -62,7 +62,7 @@ Como resultado do comando foi criada a rede vboxnet1
 `VBoxManage hostonlyif ipconfig vboxnet1 --ip ﻿192.168.57.1 --netmask 255.255.255.0`
 
 ```
-VBoxManage dhcpserver add --ifname vboxnet1 --ip 192.168.57.2 --netmask 255.255.255.0 --lowerip 192.168.57.10 --upperip 192.168.56.19
+VBoxManage dhcpserver add --ifname vboxnet1 --ip 192.168.57.2 --netmask 255.255.255.0 --lowerip 192.168.57.230 --upperip 192.168.56.253
 VBoxManage dhcpserver modify --ifname vboxnet0 --enable
 ```
 
@@ -124,86 +124,45 @@ iface enp0s8 inet static
 auto enp0s9
 allow-hotplug enp0s9
 iface enp0s9 inet static
-      address 192.168.2.100
+      address 192.168.2.20
       netmask 255.255.255.0
-
 ```
 
-Para a distribuição CentOS, considere as configurações a seguir:
+## Configurações de roteamento da internet
 
-Editar os arquivos de cada interface contidos no diretório /etc/sysconfig/network-scripts/
+Nesta configuração foi utiliza a ferramenta netfilter (IPTABLES) para a configuração de NAT, mascaramento de rede e encaminhamento de  requisições para internet.
 
-## ifcfg-enp0s3 ================================================================
+Para realizar o encaminhamento de requisições, o Kernel deve ser configurado. Essa configuração pode ser realizada utilizando o comando:
 
-TYPE="Ethernet"
-PROXY_METHOD="none"
-BROWSER_ONLY="no"
-BOOTPROTO="dhcp"
-DEFROUTE="yes"
-IPV4_FAILURE_FATAL="no"
-IPV6INIT="no"
-NAME="enp0s3"
-UUID="aecc1275-c529-42bf-b35b-78f8da8ec578"
-DEVICE="enp0s3"
-ONBOOT="yes"
+`sysctl -w net.ipv4.ip_forward=1`
 
-## ifcfg-enp0s8 ================================================================
+Ou alterar o parâmetro net.ipv4.ip_forward no arquivo /etc/sysctl.conf
 
-TYPE=Ethernet
-PROXY_METHOD=none
-BROWSER_ONLY=no
-BOOTPROTO=none
-DEFROUTE=yes
-IPV4_FAILURE_FATAL=no
-IPV6INIT=no
-NAME=enp0s8
-UUID=27a67e49-5740-4368-b509-9de96d45945f
-DEVICE=enp0s8
-ONBOOT=yes
-IPADDR=192.168.57.11
-PREFIX=24
-GATEWAY=192.168.57.3
+# Configuração do IPTABLES
 
-## ifcfg-enp0s9 ================================================================
+Para definir as regras de encaminhamento foi realizada a limpeza de todas as regras das tabelas do IPTABLES, utilizando os comandos a seguir
 
-TYPE=Ethernet
-PROXY_METHOD=none
-BROWSER_ONLY=no
-BOOTPROTO=none
-DEFROUTE=yes
-IPV4_FAILURE_FATAL=no
-IPV6INIT=no
-NAME=enp0s9
-UUID=8d25a481-382b-4fae-b7bf-989609b3189f
-DEVICE=enp0s9
-ONBOOT=yes
-IPADDR=192.168.2.8
-PREFIX=24
-
-#######=========================================================================
-
-Para realizar o compartilhamento e definição desta maquina virtual, foi utilizado o IPTABLES para as definições de NAT e mascaramento da REDE
-
-Para realizar o encaminhamento de requisições o Kernel deve ser configurado para isso. Foi feito utilizando o comando:
-
-sysctl -w net.ipv4.ip_forward=1
-
-Para definir as regras de encaminhamento, inicialmente foi realizada a limpeza de todas as regras das tabelas do IPTABLES
-
+```
 iptables --flush
 iptables --table nat --flush
 iptables --delete-chain
 iptables --table nat --delete-chain
+```
 
-E definida a regra de NAT e Mascaramento para a interface de acesso a internet
+Em seguida, as regras de NAT e Mascaramento foram adicionadas
 
+```
 iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 iptables -I FORWARD -o enp0s3 -s 192.168.0.0/16 -j ACCEPT
 iptables -I INPUT -s 192.168.0.0/16 -j ACCEPT
+```
 
-Adiciona as entradas de DNS no arquivo resolv.conf conforme abaixo
+Para um melhor funcionamento do DNS, foram adicionadas as seguintes entradas no arquivo resolv.conf conforme demonstrado a seguir:
+
+```Shell
 nameserver 8.8.8.8
 nameserver 8.8.4.4
+```
 
 Algumas fontes e referências utilizadas:
 - Configuração de redes virtuais
@@ -211,6 +170,7 @@ https://precisionsec.com/virtualbox-host-only-network-cuckoo-sandbox-0-4-2/
 https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox
 https://thornelabs.net/2015/08/24/virtualbox-commands-cheat-sheet.html
 https://www.virtualbox.org/manual/ch08.html#vboxmanage-hostonlyif
+https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox
 
 - Configuração de NAT e mascaramento de redes internas com iptables
 https://medium.com/@TarunChinmai/sharing-internet-connection-from-a-linux-machine-over-ethernet-a5cbbd775a4f
