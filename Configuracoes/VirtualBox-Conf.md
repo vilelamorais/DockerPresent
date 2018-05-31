@@ -38,17 +38,19 @@
 
 ## Elementos de configuração
 
-- Acesso a internet
+# Acesso a internet
 
 Não existem restrições ou características especiais para a conexão com a internet.
 
-- Equipamento Host
+# Equipamento Host
 
 Não existem restrições ou características especiais para o equipamento utilizado.
 
-- VirtualBox
+# VirtualBox
 
 Utilizada a versão 5.2.12 com Oracle VM VirtualBox Extension Pack 5.2.12
+
+# Configuração do ambiente virtual utilizando
 
 Para a composição da rede virtualizada utilizada uma rede interna ao VirtualBox utilizando o range ﻿192.168.57.0/24.
 Para a criação da rede interna utiliza os seguintes comandos:
@@ -88,7 +90,7 @@ Não existem requisitos definidos para a configuração das máquinas de forma g
 
 Para a definição das placas de rede foi editado o arquivo /etc/network/interfaces (no uso de SO Debian) e incluida as seguintes definições:
 
-```
+```Shell
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
