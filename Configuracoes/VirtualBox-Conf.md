@@ -1,6 +1,6 @@
 # Construção do ambiente virtual (utilizando VirtualBox)
 
-### Desenho de rede
+## Desenho de rede
 
 
 |-----------|     |---------------------------------------------------------|
@@ -57,45 +57,46 @@ Para a criação da rede interna utiliza os seguintes comandos:
 
 `VBoxManage hostonlyif create`
 
-Como resultado do comando foi criada a rede vboxnet1
-
-`VBoxManage hostonlyif ipconfig vboxnet1 --ip ﻿192.168.57.1 --netmask 255.255.255.0`
+Como resultado do comando foi criada a rede vboxnet1.
+Para a definição dos endereçamentos e DHCP foram utilizados os seguintes comandos:
 
 ```
-VBoxManage dhcpserver add --ifname vboxnet1 --ip 192.168.57.2 --netmask 255.255.255.0 --lowerip 192.168.57.230 --upperip 192.168.56.253
-VBoxManage dhcpserver modify --ifname vboxnet0 --enable
+VBoxManage hostonlyif ipconfig vboxnet1 --ip ﻿192.168.57.1 --netmask 255.255.255.0
+
+VBoxManage dhcpserver add --ifname vboxnet1 --ip 192.168.57.2 --netmask 255.255.255.0 --lowerip 192.168.57.10 --upperip 192.168.56.19
+VBoxManage dhcpserver modify --ifname vboxnet1 --enable
 ```
 
-Como resultado dos commandos acima foram realizaras as definições de DHCP para a rede criada.
-
-Como resultado do comando o range de ip foi alterado para o range especificado
+A dofinição de DHCP foi adicionado somente para a complitude do desenho da rede mas não será utilizado para esta configuração.
 
 O comando pode variar entre maiúscula e minúscula dependendo do sistema operacional utilizado. Para a apresentação criada o sistema operacional principal foi o MacOS.
 
 #### Configuração do servidor virtual de NAT
 
+###### Configurações das interfaces de rede do servidor
+
 Para criar a máquina virtual que será a centralizadora de requisições para a internet (default gateway) foi utilizada a distribuição Debian versão 9.4.0-amd64 e para manter a padronização adicionada uma máquina virtual com a distribuição CentOS versão 7 para a mesma função.
+
 As máquinas virtuais precisam ter 3 interfaces de rede, sendo:
-   * Adapter 1
-     Marcado como ativo
-     Attached to: Bridge adapter
-     Name: en1:Wi-Fi (AirPort) >> neste caso para o uso da interface de rede wireless da máquina host
-     Não foram adicionadas configurações avançadas
+
+* Adapter 1
+  - Marcado como ativo
+  - Attached to: Bridge adapter
+  - Name: en1:Wi-Fi (AirPort) >> neste caso para o uso da interface de rede wireless da máquina host
+  - Não foram adicionadas configurações avançadas
    * Adapter 2
-     Marcado como ativo
-     Attached to: Host-only adapter
-     Name: vboxnet1 >> criada anteriormente
-     Não foram adicionadas configurações avançadas
-   * Adapter 3
-     Marcado como ativo
-     Attached to: Internal Network
-     Name: DEB_NET >> nome usado para criar a rede interna, criado no momento da definição da interface de rede
-         - Como alternativa (para o uso da distribuição CentOS) foi criada também a rede DOCKER_NET
-     Não foram adicionadas configurações avançadas
+  - Marcado como ativo
+  - Attached to: Host-only adapter
+  - Name: vboxnet1 >> criada anteriormente
+  - Não foram adicionadas configurações avançadas
+* Adapter 3
+  - Marcado como ativo
+  - Attached to: Internal Network
+  - Name: DEB_NET >> nome usado para criar a rede interna, criado no momento da definição da interface de rede
+    - Como alternativa (para o uso da distribuição CentOS) foi criada também a rede DOCKER_NET
+  - Não foram adicionadas configurações avançadas
 
 Não existem requisitos definidos para a configuração das máquinas de forma geral, somente para configuração de NETWORK e NAT.
-
-#### COnfigurações das interfaces de rede do servidor
 
 Para a definição das placas de rede foi editado o arquivo /etc/network/interfaces (no uso de SO Debian) e incluida as seguintes definições:
 
