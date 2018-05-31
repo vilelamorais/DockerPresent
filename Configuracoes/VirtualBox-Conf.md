@@ -54,9 +54,11 @@ Para a composição da rede virtualizada utilizada uma rede interna ao VirtualBo
 Para a criação da rede interna utiliza os seguintes comandos:
 
 `VBoxManage hostonlyif create`
+
 Como resultado do comando foi criada a rede vboxnet1
 
 `VBoxManage hostonlyif ipconfig vboxnet1 --ip ﻿192.168.57.3 --netmask 255.255.255.0`
+
 Como resultado do comando a range de ip foi alterado para o range especificado
 
 O comando pode variar entre maiúscula e minúscula dependendo do sistema operacional utilizado. Para a apresentação criada o sistema operacional principal foi o MacOS.
