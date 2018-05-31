@@ -38,19 +38,19 @@
 
 ## Elementos de configuração
 
-# Acesso a internet
+#### Acesso a internet
 
 Não existem restrições ou características especiais para a conexão com a internet.
 
-# Equipamento Host
+#### Equipamento Host
 
 Não existem restrições ou características especiais para o equipamento utilizado.
 
-# VirtualBox
+#### VirtualBox
 
 Utilizada a versão 5.2.12 com Oracle VM VirtualBox Extension Pack 5.2.12
 
-# Configuração do ambiente virtual utilizando
+#### Configuração do ambiente virtual utilizando
 
 Para a composição da rede virtualizada utilizada uma rede interna ao VirtualBox utilizando o range ﻿192.168.57.0/24.
 Para a criação da rede interna utiliza os seguintes comandos:
@@ -72,7 +72,7 @@ Como resultado do comando o range de ip foi alterado para o range especificado
 
 O comando pode variar entre maiúscula e minúscula dependendo do sistema operacional utilizado. Para a apresentação criada o sistema operacional principal foi o MacOS.
 
-- Servidor de NAT
+#### Configuração do servidor virtual de NAT
 
 Para criar a máquina virtual que será a centralizadora de requisições para a internet (default gateway) foi utilizada a distribuição Debian versão 9.4.0-amd64 e para manter a padronização adicionada uma máquina virtual com a distribuição CentOS versão 7 para a mesma função.
 As máquinas virtuais precisam ter 3 interfaces de rede, sendo:
@@ -94,6 +94,8 @@ As máquinas virtuais precisam ter 3 interfaces de rede, sendo:
      Não foram adicionadas configurações avançadas
 
 Não existem requisitos definidos para a configuração das máquinas de forma geral, somente para configuração de NETWORK e NAT.
+
+#### COnfigurações das interfaces de rede do servidor
 
 Para a definição das placas de rede foi editado o arquivo /etc/network/interfaces (no uso de SO Debian) e incluida as seguintes definições:
 
