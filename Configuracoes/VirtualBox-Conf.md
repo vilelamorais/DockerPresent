@@ -141,7 +141,7 @@ Para realizar o encaminhamento de requisições, o Kernel deve ser configurado. 
 
 Ou alterar o parâmetro net.ipv4.ip_forward no arquivo /etc/sysctl.conf
 
-# Configuração do IPTABLES
+### Configuração do IPTABLES
 
 Para definir as regras de encaminhamento foi realizada a limpeza de todas as regras das tabelas do IPTABLES, utilizando os comandos a seguir
 
