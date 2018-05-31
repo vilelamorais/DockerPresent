@@ -143,22 +143,8 @@ Ou alterar o parâmetro net.ipv4.ip_forward no arquivo /etc/sysctl.conf
 
 ### Configuração do IPTABLES
 
-Para definir as regras de encaminhamento foi realizada a limpeza de todas as regras das tabelas do IPTABLES, utilizando os comandos a seguir
 
-```
-iptables --flush
-iptables --table nat --flush
-iptables --delete-chain
-iptables --table nat --delete-chain
-```
-
-Em seguida, as regras de NAT e Mascaramento foram adicionadas
-
-```
-iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
-iptables -I FORWARD -o enp0s3 -s 192.168.0.0/16 -j ACCEPT
-iptables -I INPUT -s 192.168.0.0/16 -j ACCEPT
-```
+Para definir as regras de encaminhamento foi realizada a limpeza de todas as regras das tabelas do IPTABLES e adicionadas as regras de NAT e encaminhamento.
 
 Para um melhor funcionamento do DNS, foram adicionadas as seguintes entradas no arquivo resolv.conf conforme demonstrado a seguir:
 
@@ -166,6 +152,8 @@ Para um melhor funcionamento do DNS, foram adicionadas as seguintes entradas no 
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 ```
+
+E para facilitar as configurações e manter a persistência das regras de encaminhamento, foi adicionado o script [00-firewall](00-firewall) ao diretório /etc/network/if-up.d sendo que todas as vezes que a máquina reiniciar ou solicitado o inicio do serviço de netwrking o script ira realizar as configurações de forma automática.
 
 Algumas fontes e referências utilizadas:
 - Configuração de redes virtuais
@@ -182,8 +170,8 @@ https://www.systutorials.com/1372/setting-up-gateway-using-iptables-and-route-on
 https://www.karlrupp.net/en/computer/nat_tutorial
 https://www.howtoforge.com/internet-connection-sharing-masquerading-on-linux
 https://www.howtoforge.com/nat_iptables
+https://www.howtoforge.com/nat-gateway-iptables-port-forwarding-dns-and-dhcp-setup-ubuntu-8.10-server
+  * (configuração válida) https://debian-administration.org/article/23/Setting_up_a_simple_Debian_gateway
 
-- Configuração de interface de rede para CetnOS
-https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-networkscripts-interfaces.html
 
 - Docker
