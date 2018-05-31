@@ -1,6 +1,6 @@
-Construção do ambiente virtual (utilizando VirtualBox)
+# Construção do ambiente virtual (utilizando VirtualBox)
 
-Desenho de rede
+### Desenho de rede
 
 
 |-----------|     |---------------------------------------------------------|
@@ -36,7 +36,7 @@ Desenho de rede
                   |---------------------------------------------------------|
 
 
-Elementos de configuração
+## Elementos de configuração
 
 - Acesso a internet
 
@@ -53,18 +53,18 @@ Utilizada a versão 5.2.10 com Oracle VM VirtualBox Extension Pack 5.2.10
 Para a composição da rede virtualizada utilizada uma rede interna ao VirtualBox utilizando o range ﻿192.168.57.0/24.
 Para a criação da rede interna utiliza os seguintes comandos:
 
-VBoxManage hostonlyif create
-   >> como resultado do comando foi criada a rede vboxnet1
+`VBoxManage hostonlyif create`
+Como resultado do comando foi criada a rede vboxnet1
 
-VBoxManage hostonlyif ipconfig vboxnet1 --ip ﻿192.168.57.3 --netmask 255.255.255.0
-   >> como resultado do comando a range de ip foi alterado para o range especificado
+`VBoxManage hostonlyif ipconfig vboxnet1 --ip ﻿192.168.57.3 --netmask 255.255.255.0`
+Como resultado do comando a range de ip foi alterado para o range especificado
 
 O comando pode variar entre maiúscula e minúscula dependendo do sistema operacional utilizado. Para a apresentação criada o sistema operacional principal foi o MacOS.
 
-- Debian NAT
+- Servidor de NAT
 
-Para criar a máquina virtual que será a centralizadora de requisições para a internet (default gateway) foi utilizada a distribuição Debian versão 9.4.0-amd64.
-A maquina virtual precisa ter 3 interfaces de rede sendo:
+Para criar a máquina virtual que será a centralizadora de requisições para a internet (default gateway) foi utilizada a distribuição Debian versão 9.4.0-amd64 e para manter a padronização adicionada uma máquina virtual com a distribuição CentOS versão 7 para a mesma função.
+As máquinas virtuais precisam ter 3 interfaces de rede, sendo:
    * Adapter 1
      Marcado como ativo
      Attached to: Bridge adapter
@@ -79,9 +79,10 @@ A maquina virtual precisa ter 3 interfaces de rede sendo:
      Marcado como ativo
      Attached to: Internal Network
      Name: DEB_NET >> nome usado para criar a rede interna, criado no momento da definição da interface de rede
+         - Como alternativa (para o uso da distribuição CentOS) foi criada também a rede DOCKER_NET
      Não foram adicionadas configurações avançadas
 
-Não existem requisitos definidos para a configuração da máquina de forma geral, somente para configuração de NETWORK e NAT.
+Não existem requisitos definidos para a configuração das máquinas de forma geral, somente para configuração de NETWORK e NAT.
 
 Para a definição das placas de rede foi editado o arquivo /etc/network/interfaces (no uso de SO Debian) e incluida as seguintes definições:
 
@@ -116,9 +117,9 @@ iface enp0s9 inet static
 
 #######=========================================================================
 
-Para o SO CentOS, considere as configurações a seguir:
+Para a distribuição CentOS, considere as configurações a seguir:
 
-Editar os arquivos de cada interface contído no diretório /etc/sysconfig/network-scripts/
+Editar os arquivos de cada interface contidos no diretório /etc/sysconfig/network-scripts/
 
 ## ifcfg-enp0s3 ================================================================
 
