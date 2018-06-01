@@ -36,7 +36,7 @@ VBoxManage dhcpserver add --ifname vboxnet1 --ip 192.168.57.2 --netmask 255.255.
 VBoxManage dhcpserver modify --ifname vboxnet1 --enable
 ```
 
-A dofinição de DHCP foi adicionado somente para a complitude do desenho da rede mas não será utilizado para esta configuração.
+A definição de DHCP foi adicionado somente para a complitude do desenho da rede mas não será utilizado para esta configuração.
 
 O comando pode variar entre maiúscula e minúscula dependendo do sistema operacional utilizado. Para a apresentação criada o sistema operacional principal foi o MacOS.
 
@@ -53,7 +53,7 @@ As máquinas virtuais precisam ter 3 interfaces de rede, sendo:
   - Attached to: Bridge adapter
   - Name: en1:Wi-Fi (AirPort) >> neste caso para o uso da interface de rede wireless da máquina host
   - Não foram adicionadas configurações avançadas
-   * Adapter 2
+* Adapter 2
   - Marcado como ativo
   - Attached to: Host-only adapter
   - Name: vboxnet1 >> criada anteriormente
