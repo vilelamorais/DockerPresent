@@ -2,38 +2,7 @@
 
 ## Desenho de rede
 
-
-|-----------|     |---------------------------------------------------------|
-|           |     |                                                         |
-|  Acesso   |     |    Equipamento Host (Virtualizador)                     |
-|     a     |-----|            |                                            |
-| internet  |     |            |                                            |
-|           |     |  |---------|---------- VirtualBox -------------------|  |
-|-----------|     |  |         |                                         |  |
-      |           |  |         | Host-only adapter (entrada 2)           |  |
-      |           |  |         |                                         |  |
-      |           |  |   |-----------|                                   |  |
-      |           |  |   |           |                                   |  |
-      |           |  |   |  Debian   |                                   |  |
-      |-----------|--|---|           |---------|                         |  |
-   Bridged        |  |   |   NAT     |         |                         |  |
-   adapter        |  |   |           |         |  Internal network       |  |
-  (entrada 1)     |  |   |-----------|         |   (entrada 3)           |  |
-                  |  |                         |                         |  |
-                  |  |                         |                         |  |
-                  |  |         |---------------|----------------|        |  |
-                  |  |         |               |                |        |  |
-                  |  |   |-----------|   |-----------|   |-----------|   |  |
-                  |  |   |           |   |           |   |           |   |  |
-                  |  |   |           |   |           |   |           |   |  |
-                  |  |   |   BOX 01  |   |   BOX 02  |   |  BOX N+1  |   |  |
-                  |  |   |           |   |           |   |           |   |  |
-                  |  |   |           |   |           |   |           |   |  |
-                  |  |   |-----------|   |-----------|   |-----------|   |  |
-                  |  |                                                   |  |
-                  |  |---------------------------------------------------|  |
-                  |                                                         |
-                  |---------------------------------------------------------|
+![Topologia](Arquitetura-VirtualBOX.png)
 
 
 ## Elementos de configuração
@@ -171,7 +140,4 @@ https://www.karlrupp.net/en/computer/nat_tutorial
 https://www.howtoforge.com/internet-connection-sharing-masquerading-on-linux
 https://www.howtoforge.com/nat_iptables
 https://www.howtoforge.com/nat-gateway-iptables-port-forwarding-dns-and-dhcp-setup-ubuntu-8.10-server
-  * (configuração válida) https://debian-administration.org/article/23/Setting_up_a_simple_Debian_gateway
-
-
-- Docker
+  * (Configuração utilizada para o IPTABLES nesta apresentação) https://debian-administration.org/article/23/Setting_up_a_simple_Debian_gateway
