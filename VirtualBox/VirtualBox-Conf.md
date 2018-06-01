@@ -120,26 +120,19 @@ Para um melhor funcionamento do DNS, foram adicionadas as seguintes entradas no 
 ```Shell
 nameserver 8.8.8.8
 nameserver 8.8.4.4
+
+nameserver 208.67.222.222
+nameserver 208.67.220.220
 ```
 
 E para facilitar as configurações e manter a persistência das regras de encaminhamento, foi adicionado o script [00-firewall](00-firewall) ao diretório /etc/network/if-up.d sendo que todas as vezes que a máquina reiniciar ou solicitado o inicio do serviço de netwrking o script ira realizar as configurações de forma automática.
 
 ##### Algumas fontes e referências utilizadas:
 ###### Configuração de redes virtuais
-* https://precisionsec.com/virtualbox-host-only-network-cuckoo-sandbox-0-4-2/
-* https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox
-* https://thornelabs.net/2015/08/24/virtualbox-commands-cheat-sheet.html
-* https://www.virtualbox.org/manual/ch08.html#vboxmanage-hostonlyif
-* https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox
+* [Configuração para Host-only interface](https://precisionsec.com/virtualbox-host-only-network-cuckoo-sandbox-0-4-2/)
+* [Configuração de rede interna e DHCP](https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox)
+* [Comandos do VirtualBOX para configuração de redes internas](https://thornelabs.net/2015/08/24/virtualbox-commands-cheat-sheet.html)
+* [Manual do VirtualBOX para configuração de  redes](https://www.virtualbox.org/manual/ch08.html#vboxmanage-hostonlyif)
 
 ###### Configuração de NAT e mascaramento de redes internas com iptables
-* https://medium.com/@TarunChinmai/sharing-internet-connection-from-a-linux-machine-over-ethernet-a5cbbd775a4f
-* http://www.linuxandubuntu.com/home/how-to-configure-iptables-firewall-in-linux
-* https://www.systutorials.com/1372/setting-up-gateway-using-iptables-and-route-on-linux/
-* https://www.karlrupp.net/en/computer/nat_tutorial
-* https://www.howtoforge.com/internet-connection-sharing-masquerading-on-linux
-* https://www.howtoforge.com/nat_iptables
-* https://www.howtoforge.com/nat-gateway-iptables-port-forwarding-dns-and-dhcp-setup-ubuntu-8.10-server
-
-###### Configuração utilizada para o netfilter/IPTABLES nesta apresentação:
-* https://debian-administration.org/article/23/Setting_up_a_simple_Debian_gateway
+* [Configuração de compartilhamento de internet para a rede interna usando IPTABLES](https://debian-administration.org/article/23/Setting_up_a_simple_Debian_gateway)
