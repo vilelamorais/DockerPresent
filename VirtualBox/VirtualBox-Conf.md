@@ -124,15 +124,15 @@ nameserver 8.8.4.4
 
 E para facilitar as configurações e manter a persistência das regras de encaminhamento, foi adicionado o script [00-firewall](00-firewall) ao diretório /etc/network/if-up.d sendo que todas as vezes que a máquina reiniciar ou solicitado o inicio do serviço de netwrking o script ira realizar as configurações de forma automática.
 
-#####Algumas fontes e referências utilizadas:
-######Configuração de redes virtuais
+##### Algumas fontes e referências utilizadas:
+###### Configuração de redes virtuais
 * https://precisionsec.com/virtualbox-host-only-network-cuckoo-sandbox-0-4-2/
 * https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox
 * https://thornelabs.net/2015/08/24/virtualbox-commands-cheat-sheet.html
 * https://www.virtualbox.org/manual/ch08.html#vboxmanage-hostonlyif
 * https://superuser.com/questions/429432/how-can-i-configure-a-dhcp-server-assigned-to-a-host-only-net-in-virtualbox
 
-######Configuração de NAT e mascaramento de redes internas com iptables
+###### Configuração de NAT e mascaramento de redes internas com iptables
 * https://medium.com/@TarunChinmai/sharing-internet-connection-from-a-linux-machine-over-ethernet-a5cbbd775a4f
 * http://www.linuxandubuntu.com/home/how-to-configure-iptables-firewall-in-linux
 * https://www.systutorials.com/1372/setting-up-gateway-using-iptables-and-route-on-linux/
