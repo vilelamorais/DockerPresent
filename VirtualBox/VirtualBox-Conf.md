@@ -125,7 +125,43 @@ nameserver 208.67.222.222
 nameserver 208.67.220.220
 ```
 
-E para facilitar as configurações e manter a persistência das regras de encaminhamento, foi adicionado o script [00-firewall](00-firewall) ao diretório /etc/network/if-up.d sendo que todas as vezes que a máquina reiniciar ou solicitado o inicio do serviço de netwrking o script ira realizar as configurações de forma automática.
+E para facilitar as configurações e manter a persistência das regras de encaminhamento, foi adicionado o script [00-firewall](00-firewall) ao diretório /etc/network/if-up.d sendo que todas as vezes que a máquina reiniciar ou solicitado o inicio do serviço de netwrking o script ira realizar as configurações de forma automática. A seguir o script utilizado.
+
+```Shell
+#!/bin/sh
+
+PATH=/usr/sbin:/sbin:/bin:/usr/bin
+
+#
+# delete all existing rules.
+#
+iptables -F
+iptables -t nat -F
+iptables -t mangle -F
+iptables -X
+
+# Always accept loopback traffic
+iptables -A INPUT -i lo -j ACCEPT
+
+
+# Allow established connections, and those not coming from the outside
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -m state --state NEW -i ! enp0s3 -j ACCEPT
+iptables -A FORWARD -i enp0s3 -o enp0s9 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Allow outgoing connections from the LAN side.
+iptables -A FORWARD -i enp0s9 -o enp0s3 -j ACCEPT
+
+# Masquerade.
+iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+
+# Don't forward from the outside to the inside.
+iptables -A FORWARD -i enp0s3 -o enp0s3 -j REJECT
+
+# Enable routing.
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+```
 
 ##### Algumas fontes e referências utilizadas:
 ###### Configuração de redes virtuais
