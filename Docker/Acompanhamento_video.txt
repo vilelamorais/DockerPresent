@@ -1,0 +1,3 @@
+Script "conveniente" para instalação do docker
+
+curl -sSL https://get.docker.com | sh
