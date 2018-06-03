@@ -25,26 +25,11 @@ docker build -t vileludo/apache:1.0 .
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-########################
-### Montagem
-
-##== Configuração de REDE
-Wi-Fi: Birita
-Senha: mussumvive
-
-Host do roteador: 192.168.0.1
-Configurado como Wireless router (Operation Mode)
-
-usuário admin: zeca
-senha admin: cluster
-
-
 ##== Configuração das imagens
 
-Para passar par os memory cards
+Para passar para os memory cards
 sudo diskutil umount /dev/disk3s1 && sudo diskutil umount /dev/disk3
 sudo dd if=2018-03-13-raspbian-stretch-lite.img of=/dev/disk3
-
 
 ##== Comandos docker
 
