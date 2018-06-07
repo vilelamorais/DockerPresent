@@ -1,0 +1,2 @@
+FROM debian
+RUN /bin/echo "Basofias para acalentar bovinos"

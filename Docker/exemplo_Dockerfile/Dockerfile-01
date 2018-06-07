@@ -1,0 +1,42 @@
+# FROM determina qual a imagem base para a montagem desta imagem
+# Obrigatório ser a primeira opção no Dockerfile
+FROM debian
+
+# Mantenedor do Dockerfile
+MAINTAINER Marcelo Vilela vilelamorais@gmail.com
+
+# RUN executar compandos no container
+# Cada RUN executado gera uma nova camada para gerenciamento
+RUN apt-get update && apt-get install apache2 -y && apt-get clean
+
+# Parametro ADD transfere um arquivo/diretório/tarball no diretório especificado para a imagem do container
+ADD opa.txt /diretorio/
+
+# CMD é um comando/parametro do Entrypoint (principal processo do container)
+CMD ["sh", "-c", "echo", "$HOME"]
+
+* LABEL adiciona metadados às informações do Dockerfile
+LABEL Description="Bla bla bla"
+
+# COPY transfere somente arquivos ou diretórios e não tarballs
+COPY opa.txt /diretorio/
+
+# ENTRYPOINT especifica o principal processo dentro do container
+# Se tiver um ENTRYPOINT definido o CMD é parametro para o ENTRYPOINT
+ENTRYPOINT ["/usr/bin/apache2ctl", "-D", "FOREGROUD"]
+
+# ENV é para determinar variávies de ambiente
+ENV meunome="Marcelo Vilela"
+
+# EXPOSE exponhe a porta do serv
+EXPOSE 80
+
+# Definição do usuário default do container
+# se não for definido o usuário padrão será o root
+USER vilela
+
+# Diretório que será o diretório raiz/trabalho do container
+WORKDIR /var/www
+
+# Define um volume a ser atachado ao container
+VOLUME /diretorio

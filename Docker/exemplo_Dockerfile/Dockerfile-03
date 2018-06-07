@@ -1,0 +1,25 @@
+# Imagem base utilizada para montar a imagem do container
+FROM debian
+
+# Atualização da imagem base e instalação do serviço do apache2
+# Utilizado o parametro -y para evitar bloqueio por dependencia de interação da interface
+RUN apt-get update && apt-get install apache2 -y && apt-get clean
+
+# Definições das variáveis de ambiete para o funcionamento do apache2
+ENV APACHE_LOCK_DIR="/var/lock"
+ENV APACHE_PID_FILE="/var/run/apache2.pid"
+ENV APACHE_RUN_USER="www-data"
+ENV APACHE_RUN_GROUP="www-data"
+ENV APACHE_LOG_DIR="/var/log/apache2"
+
+# Informações sobre a imagem
+LABEL Description="Webserver"
+
+# Volume do diretório onde estarão os documentos
+VOLUME /var/www/html
+
+# Exposição da porta do serviço
+EXPOSE 80
+
+# iniciar o apache de forma automatica quando o container for criado
+ENTRYPOINT ["/usr/bin/apache2ctl", "-D", "FOREGROUD"]

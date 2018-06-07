@@ -1,3 +1,197 @@
 Script "conveniente" para instalação do docker
 
 curl -sSL https://get.docker.com | sh
+
+docker ps => lista os containers ativos
+    docker ps -a => lista todos os containers
+
+docker run -ti ubuntu /bin/bash
+
+para sair da máquina -> Ctrl+p+q
+
+para voltar para o container
+
+docker attach <container id>
+
+docker create -> cria o container mas não inicia a imagem
+   baixa a imagem se necessário
+
+docker run -ti <container baixado/criado>
+
+docker stop <container id>
+
+docker start <container id>
+
+docker pause <container id>
+docker unpause <container id>
+
+consumo stats <container id>
+ - mostra os seguintes itens:
+     * Container ID
+     * CPU %
+     * MEM USAGE / LIMIT
+     * MEM %
+     * NET IO
+     * BLOCK IO
+     * PIDS
+
+docker top <container id>
+   informações de processos do containers
+
+docker logs <container id>
+   todos os logs referente ao processo do containers
+
+docker rm <container id>
+  se o conteiner estiver em execução usar a opção -f para forçar a remoção
+
+
+docker images
+  lista as imagens baixadas
+
+
+### limites de consumo dos containers
+
+docker inspect <container id>
+  lista todas as informações do container
+
+docker run -ti --name teste debian
+
+docker inspect <container id> | grep -i mem
+   Quando o registro "Memory" aparece com o valor 0 indica que não foi definido limite para o uso de memória pelo container.
+
+docker run -ti --memory 512m --name novo_teste debian
+docker run -ti -m 512m --name novo_teste debian
+
+Para atualizar as definições de container on the fly utilizar o comando update
+
+docker update -m 256m <container id>
+docker update --memory <nome do container>
+
+docker inspect <container id> | grep -i mem
+
+limitação de uso de CPU
+docker run -ti --cpu-shares 1024 --name container1 debian
+docker run -ti --cpu-shares 512  --name container2 debian
+docker run -ti --cpu-shares 512  --name container3 debian
+
+docker inspect <container id> | grep -i cpu
+
+docker update --cpu-shares 512 container1
+docker inspect container1 | grep -i cpu
+
+Utilização de volume no docker
+
+docker run -ti -v /volume ubuntu /bin/bash
+
+docker inspect -f {{.Mounts}} <container id>
+
+docker run -ti -v /root/primeiro_dockerfile:/volume debian
+   Monta o diretório /root/primeiro_dockerfile como um volume no diretório /volume no container
+
+docker inspect -f {{.Mounts}} <container id>
+
+criar um container data only
+  possue volumes compartilhados com outros containers
+  precisa somente estar criado
+  não precisa estar no ar
+
+docker create -v /data --name dbdados centos
+
+criou o conteiner que ainda não esta em execução
+
+os outros conteiner serão criados utilizando o container dbdados para compartilhar dados
+  o volume /dados serão compartilhado com  vários containers
+
+opção a ser usada --volumes-from
+
+docker run -d -p 5432:5432 --name pgsql1 --volumes-from dbdados -e POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
+docker run -d -p 5433:5432 --name pgsql2 --volumes-from dbdados -e POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
+
+  -d, --detach=true|false
+   Detached mode: run the container in the background and print the new container ID. The default is false.
+
+  -p, --publish=[]
+   Publish a container's port, or range of ports, to the host.
+
+   Format: ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort Both hostPort and containerPort can be specified as a range of ports.  When specifying ranges for both, the number of container ports in the range must match the number of host ports in the range.  (e.g., docker run -p 1234-1236:1222-1224 --name thisWorks -t busybox but not docker run -p 1230-1236:1230-1240 --name RangeContainerPortsBiggerThanRangeHostPorts -t busybox) With ip: docker run -p 127.0.0.1:$HOSTPORT:$CONTAINERPORT --name CONTAINER -t someimage Use docker port to see the actual mapping: docker port CONTAINER $CONTAINERPORT
+
+  --volumes-from=[]
+    Mount volumes from the specified container(s)
+
+    Mounts already mounted volumes from a source container onto another container. You must supply the source's container-id. To share a volume, use the --volumes-from option when running the target container. You can share volumes even if the source container is not running.
+
+    By default, Docker mounts the volumes in the same mode (read-write or read-only) as it is mounted in the source container. Optionally, you can change this by suffixing the container-id with either the :ro or :rw keyword.
+
+    If the location of the volume from the source container overlaps with data residing on a target container, then the volume hides that data on the target.
+
+-p <porta do host>:<porta do container>
+-e passa variáveis de ambiente para o container
+
+docker inspect -f {{.Mounts}} <container id>
+
+
+###### criar o Dockerfile
+
+similar ao makefile (compilação)
+
+arquivo com as instruções para construir a imagem
+
+diretório /root/primeiro_dockerfile
+
+O arquivo de Dockerfile precisar ser "Dockerfile"
+
+
+##### Para buildar a imagem com as definições do Dockerfile
+
+Acessar o diretório onde está o arquivo do Dockerfile
+
+docker build .
+docker images
+  vai aparecer com campos faltando
+
+docker build -t <nome da imagem>:1.0 .
+
+para usar essa imagem é só criar um container chamando a imagem utilizada
+
+
+mkdir /root/dockerfiles/apache
+criar ou arquivo Dockerfile para o apache neste diretório
+
+##########
+
+docker build -t webserver:1.0 .
+
+docker images
+docker run -ti webserver:1.0
+
+/etc/init.d/apache2 start
+
+ps -ef
+  observar se o processo do apache2 está iniciado
+
+ss -a
+   comando paracido com o netstat -na
+
+ipaddr
+
+ctrl+p+q
+
+docker ps
+
+telnet <ip> 80
+
+curl <ip>:80
+
+#### Governança das imagens
+
+https://hub.docker.com
+
+Consegue buscar ou compartilhar imagens buildadas de Docker
+
+consegue criar respositórios e publicos
+  na conta gratuita é permitido somente um
+
+########
+
+docker inspect <imagem>:<versão> -> para identificar os detalhes da imagem
+docker history <imagem>:<versão> -> para visualizar o histórico e evolução da construção da imagem
