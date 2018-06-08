@@ -29,20 +29,16 @@ To add a manager to this swarm, run the following command:
   --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   dockersamples/visualizer
-## Resposta
-Criado o serviço VIZ associado ao container manager
-
-|| Para exemplo será criado um serviço para wordpress
+## Criado o serviço VIZ associado ao container manager
 
 >> docker service create --replicas 1 --detach=true --name helloworld alpine ping google.com
 ## Criado o serviço helloworld
 
 >> docker service scale helloworld=10
-## criada a replica para 10 containers
+## Criada a replica para 10 containers
 
 >> docker service create --name mynodered -p1880:1880 --replicas 1 --detach=true nodered/node-red-docker
 ## Criado o serviço de nodered
 
 >> docker service scale mynodered=3
-## Resultado
-- Criado o serviço mynodered
+## Criada a replica para 3 containers
