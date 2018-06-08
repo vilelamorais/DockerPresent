@@ -1,0 +1,48 @@
+>> docker swarm init --listen-addr 192.168.2.200
+## Resultado
+Swarm initialized: current node (s109x6p6ukp97ffbf13ban18g) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-58stle4kott60vtl6bhftm6p6x802y33ju4mwu0v66c2cn2bwt-1tc0pxb5vyoo8taqazzcz7jfm 192.168.2.200:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+>> docker swarm join-token manager
+## Resultado
+To add a manager to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-58stle4kott60vtl6bhftm6p6x802y33ju4mwu0v66c2cn2bwt-28y3dodd0o8y9v389clzhugdn 192.168.2.200:2377
+
+>> docker node ls
+## Listagem dos nos do cluster
+
+
+
+||| Criando os serviços
+
+
+
+>> docker service create \
+  --name=viz \
+  --publish=8080:8080/tcp \
+  --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  dockersamples/visualizer
+## Resposta
+Criado o serviço VIZ associado ao container manager
+
+|| Para exemplo será criado um serviço para wordpress
+
+>> docker service create --replicas 1 --detach=true --name helloworld alpine ping google.com
+## Criado o serviço helloworld
+
+>> docker service scale helloworld=10
+## criada a replica para 10 containers
+
+>> docker service create --name mynodered -p1880:1880 --replicas 1 --detach=true nodered/node-red-docker
+## Criado o serviço de nodered
+
+>> docker service scale mynodered=3
+## Resultado
+- Criado o serviço mynodered

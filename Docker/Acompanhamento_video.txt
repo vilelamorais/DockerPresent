@@ -193,5 +193,81 @@ consegue criar respositórios e publicos
 
 ########
 
+docker login
+
 docker inspect <imagem>:<versão> -> para identificar os detalhes da imagem
 docker history <imagem>:<versão> -> para visualizar o histórico e evolução da construção da imagem
+
+https://imagelayers.io
+
+Priorizar imagens do hub.docker.com que tenham Dockerfile para realizar inspeções ou auditorias na construção da imagem
+
+docker tag <image id> <novo nome>
+  altera a informação de nome deuma imagem
+
+docker tag <image id> vilelamorais/webserver:1.0
+
+docker images
+
+docker push vilelamorais/webserver:1.0
+  envia a imagem para o docker hub
+
+docker search vilelamorais
+  lista as imagens para o usuário vilelamorais
+
+docker rmi -f vilemaorais/webserver:1.0
+  remove a imagem localmente
+
+docker pull vilelamorais/webserver:1.0
+  baixa a imagem do docker hub
+
+##### Criando um repositório local
+
+Criando um repositório local para disponibilização de imagens em um container
+
+docker run -d -p 5000:5000 --restart=always --name registry registry
+  -d                -> para rodar como um deamon
+  --restart=always  -> qualquer inconsistencia com o container este será reiniciado
+
+docker tag <image id> localhost:5000/webserver:1.0
+
+docker push localhost:500/webserver:1.0
+
+curl localhost:5000/v2/_catalog
+  lista as imagens disponiveis no registry (respositório de imagens criadas)
+
+####### Configurações de rede
+
+docker run -ti --dns 8.8.8.8 --hostname strudel debian
+  --dns        -> define o servidor de dns definido para o container
+  --hostname   -> define o hostname do container (não é o nome do container, é o nome de rede)
+  --link       -> definição de comunicação entre container adicionando uma entrada no /etc/hosts
+  --expose     -> expor a porta do container
+
+docker run -ti --name cont1 debian
+
+docker run -ti --ling cont1 --name cont2 debian
+
+docker run -ti --expose 80 debian
+
+docker run -ti --publish 8080:80 debian
+docker run -ti -p 8080:80
+  redireciona a porta local 8080 para a porta 80 do container
+
+docker run -ti --mac-address 12:34:de:b0:6b:61 debian
+
+docker run -ti -p 8080:80 --name webserver debian
+
+docker run -ti --net=host debian
+  --net=host  -> defini que toda a stack de network do container será o do host
+
+##### Docker-Machine
+
+Padronização de container
+
+wget https://github.com/docker/machine/releases/download/v0.7.0/docker-machine-`uname -s`-`uname -m`
+wget https://github.com/docker/machine/releases/download/v0.14.0/docker-machine-`uname -s`-`uname -m`
+
+mv docker-machine-Linux-x86_64 /usr/local/bin/
+
+chmod +x /usr/local/bin/docker-machine-Linux-x86_64

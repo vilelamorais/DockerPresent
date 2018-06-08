@@ -1,0 +1,21 @@
+127.0.0.1	localhost
+127.0.1.1	<servidor>
+
+# Servidores para a apresentação de DOCKER
+
+# Servidores de suporte
+192.168.2.29    NATY
+192.168.2.31    XBURGER
+192.168.2.32    MISTO
+
+# Servidores MANAGER
+192.168.2.200   OOGWAY
+192.168.2.201   PAIMEI
+192.168.2.202   SHONUFF
+
+# Servidores WORKERS
+192.168.2.100   W00
+192.168.2.101   w01
+192.168.2.102   W02
+192.168.2.103   w03
+192.168.2.104   W04
